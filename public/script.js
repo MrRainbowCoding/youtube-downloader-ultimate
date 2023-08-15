@@ -5,21 +5,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadLink = document.getElementById('downloadLink');
     const statusDiv = document.getElementById('status');
 
-    downloadBtn.addEventListener('click', async() => {
+    downloadBtn.addEventListener('click', async () => {
         const url = urlInput.value;
         const format = formatSelect.value;
 
         statusDiv.textContent = 'Checking...';
 
         try {
-            const infoResponse = await fetch(`/getInfo?url=${encodeURIComponent(url)}`);
+            const infoResponse = await fetch(`/api/getInfo?url=${encodeURIComponent(url)}`);
             const infoData = await infoResponse.json();
 
             statusDiv.textContent = `Title: ${infoData.title}`;
             statusDiv.textContent += '\nDownloading...';
 
             // Construct the download link
-            const downloadUrl = `/download?url=${encodeURIComponent(url)}&format=${format}`;
+            const downloadUrl = `/api/download?url=${encodeURIComponent(url)}&format=${format}`;
             downloadLink.href = downloadUrl;
             downloadLink.style.display = 'block';
 
