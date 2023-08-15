@@ -1,4 +1,4 @@
-### YouTube Downloader Ultimate
+# YouTube Downloader Ultimate
 
 This is a simple web application that allows you to download YouTube videos and audio as either MP4 or MP3 files. It uses the `ytdl-core` library for fetching video information and downloading, as well as the `fluent-ffmpeg` library for audio conversion.
 
