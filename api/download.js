@@ -21,12 +21,11 @@ module.exports = async (req, res) => {
     res.setHeader('Content-Type', mimeType);
 
 
-
     if (format === 'mp3') {
         const tempFilePath = '/tmp/temp.mp4';
-
+    
         const audioStream = ytdl(url, { quality: 'highest' });
-
+    
         audioStream.pipe(fs.createWriteStream(tempFilePath))
             .on('finish', () => {
                 ffmpeg()
@@ -34,13 +33,14 @@ module.exports = async (req, res) => {
                     .audioCodec('libmp3lame')
                     .audioBitrate(192)
                     .format('mp3')
-                    .pipe(res, { end: true })
+                    .pipe(res, { end: false }) // Set end to false here
                     .on('finish', () => {
                         fs.unlink(tempFilePath, (err) => {
                             if (err) {
                                 console.error('Error deleting temporary file:', err);
                             }
                         });
+                        res.end(); // End the response manually here
                     });
             });
     } else {
