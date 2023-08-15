@@ -12,13 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
         statusDiv.textContent = 'Checking...';
 
         try {
-            const infoResponse = await fetch(`/api/getInfo?url=${encodeURIComponent(url)}`);
+            const infoResponse = await fetch(`/api/get-info?url=${encodeURIComponent(url)}`);
             const infoData = await infoResponse.json();
 
             statusDiv.textContent = `Title: ${infoData.title}`;
             statusDiv.textContent += '\nDownloading...';
 
-            // Construct the download link
             const downloadUrl = `/api/download?url=${encodeURIComponent(url)}&format=${format}`;
             downloadLink.href = downloadUrl;
             downloadLink.style.display = 'block';

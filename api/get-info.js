@@ -1,14 +1,18 @@
-// api/get-info.js
 const ytdl = require('ytdl-core');
-const { send } = require('micro');
 
 module.exports = async (req, res) => {
     const { url } = req.query;
 
     try {
         const videoInfo = await ytdl.getInfo(url);
-        send(res, 200, videoInfo.videoDetails);
+        const response = {
+            title: videoInfo.videoDetails.title,
+            length: videoInfo.videoDetails.lengthSeconds,
+            author: videoInfo.videoDetails.author.name,
+        };
+        res.status(200).json(response);
     } catch (error) {
-        send(res, 500, { error: 'An error occurred.' });
+        console.error('An error occurred:', error);
+        res.status(500).json({ error: 'An error occurred' });
     }
 };
